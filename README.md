@@ -2,6 +2,7 @@
 
 <p align="center"><b>キャラクターが毎朝ニュースを読む「放送局」を、<br>GitHub のリポジトリ 1 つで開けます。</b></p>
 
+<!-- 複製して自分の局にしたら：この画像（docs/screen.jpg、ものラジオの画面）と下の ON AIR バッジを、自分の局のものに差し替えてください（AGENTS.md の「新しい局を開くとき」） -->
 <p align="center">
   <a href="https://monoradio102.github.io/myradio/"><img src="docs/screen.jpg" alt="ものラジオの放送画面" width="820"></a>
 </p>
@@ -38,7 +39,8 @@
 4. **一回目の原稿を書く**：お手本の回（`episodes/`、`episodes.json`）を消して、自分の台本を置く。形は [docs/formats.md](docs/formats.md)
 5. **声を吹き込む**：台本から音声を作って `audio/<日付>-<言語>.mp3` に置く
 6. **電波を出す**：`tools/publish.sh` を実行すると、GitHub Pages で放送が始まります。リポジトリの設定で、Pages の公開元を `gh-pages` ブランチにしておく
-7. **見つけてもらう**：リポジトリに topic `myradio-station` を付けると、ほかの人から探しやすくなります
+7. **看板を掛け替える**：この README を自分の局の紹介に書き換える。冒頭の画像（`docs/screen.jpg`）と ON AIR バッジは、ものラジオのものなので、自分の局の画面とリンクにする
+8. **見つけてもらう**：リポジトリに topic `myradio-station` を付けると、ほかの人から探しやすくなります
 
 音声は main ブランチにはコミットしません。`tools/publish.sh` が、放送用の `gh-pages` ブランチを「main の中身＋直近 30 日の音声」で毎回作り直して push します。だから、毎日放送してもリポジトリが音声で重くならず、古い音声は自然に消えます（台本は残ります）。
 
