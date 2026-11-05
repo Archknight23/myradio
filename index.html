@@ -587,7 +587,16 @@ void main() {
   vec2 uv = v;
   float d = hasDep > .5 ? texture2D(dep, uv).r : .5;
   uv.y += sin(t * 1.7) * .0035 * smoothstep(.45, 1., uv.y);                      // breathing: the body rises a little
-  uv -= look * (d - .45) * .045;                                                 // the head turns: nearer parts move more
+  // the head turns: nearer parts move more. Each pixel is taken from where it came from, found by stepping from near to
+  // far until the depth there is reached, so the outline of the face moves with what is inside it (a mouth stays on the face)
+  if (hasDep > .5) {
+    vec2 off = look * .045, prev = uv - off * .55; float zp = 1., dp = texture2D(dep, prev).r;
+    for (int i = 1; i <= 24; i++) {
+      float z = 1. - float(i) / 24.; vec2 q = uv - off * (z - .45); float dq = texture2D(dep, q).r;
+      if (dq >= z || i == 24) { float a = (zp - dp) / max((zp - dp) + (dq - z), 1e-4); d = mix(dp, dq, a); uv -= off * (mix(zp, z, a) - .45); break; }
+      zp = z; dp = dq;
+    }
+  } else uv -= look * (d - .45) * .045;
   float hair = hasDep > .5 ? smoothstep(.42, .16, d) * smoothstep(.25, .95, uv.y) : 0.;   // back hair (far in depth)
   uv.x += sin(t * 1.25 + uv.y * 4.) * .006 * hair;                               // sways, more toward the tips
   vec4 c = texture2D(col, uv);                                                   // premultiplied
