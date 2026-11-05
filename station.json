@@ -25,6 +25,7 @@
  "credits": [
   "声：COEIROINK:リリンちゃん"
  ],
+ "caster": "声：COEIROINK:リリンちゃん",
  "audio": {
   "dir": "audio",
   "keep_days": 30
@@ -45,7 +46,8 @@
    "description": "The news worth knowing in electronics, 3D printing and AI, every morning in 90 seconds.",
    "credits": [
     "Voice: Kokoro (af_heart)"
-   ]
+   ],
+   "caster": "Voice: Kokoro (af_heart)"
   }
  }
 }

@@ -18,11 +18,12 @@
 | `schedule` | `{"every": "day", "time": "06:10", "timezone": "Asia/Tokyo"}` など。いつごろ新しい回が出るか |
 | `episodes` | 回の一覧のファイル（`"episodes.json"`） |
 | `character` | `{"pack": "character/character.json", "thumbnail": …, "note": …}` |
-| `credits` | 表示するクレジットの並び（声や素材の利用条件で必要なものは必ず） |
+| `credits` | 表示するクレジットの並び（声や素材の利用条件で必要なものは必ず）。ページの下に出る |
+| `caster` | （任意）キャラの枠の右下に小さく出す名札。キャラの名前や、声の名前（例：`声：COEIROINK:リリンちゃん`）など短く。書かなければ何も出ない。言語で変えるときは `i18n` にも |
 | `audio` | `{"dir": "audio", "keep_days": 30}`（`tools/publish.sh` が使う） |
 | `weather` | （任意）`true` で、ニュース中のキャラの左に今日の天気を出す。場所は見る人のブラウザのタイムゾーンからおおまかに決め、地名を押すと、ほかの都市か、見る人の現在地（このときだけブラウザが許可を聞く）を選べる。天気は Open-Meteo（キー不要、クレジット表示が条件） |
 | `comments` | （任意）回ごとのコメント欄。`{"giscus": {"repo", "repoId", "category", "categoryId"}}`。同じ日の回（言語ちがいも）で 1 つの GitHub Discussions のスレッドを使い、最初のコメントで giscus が自動で立てる。見る人が「コメント」を開くまで giscus.app は読みこまない。値は https://giscus.app で調べられる。書かなければコメント欄は出ない |
-| `i18n` | 言語ごとに差し替える欄：`{"en": {"name", "tagline", "description", "credits"}}`（声が言語で違えば、クレジットも言語ごとに） |
+| `i18n` | 言語ごとに差し替える欄：`{"en": {"name", "tagline", "description", "credits", "caster"}}`（声が言語で違えば、クレジットも言語ごとに） |
 
 ## episodes.json
 
