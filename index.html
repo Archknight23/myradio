@@ -345,53 +345,81 @@ summary{cursor:pointer;color:var(--muted);font-size:14px}
 .source{white-space:pre-wrap;font-size:14px;line-height:1.7;color:#d6d8e0}
 footer{margin-top:24px;font-size:12px;color:var(--muted)}footer a{color:var(--yellow)}
 @media (max-width:700px){ main{padding:10px} #now{display:block} }
-/* a phone held upright: the stage turns into a 1080x1920 one, like a short video. The parts are the same, only their
-   places and sizes change: the topic numbers in a row, the panel on top, the link card under it, then the weather and
-   her small camera; she is big under the panel for the opening and the closing; the caption (room for two lines) at the bottom */
-@media (orientation:portrait) and (max-width:820px){
-  main{padding:6px}
-  #frame{aspect-ratio:9/16;width:min(100%, calc((100svh - 64px) * 9 / 16));margin:0 auto}
-  html.embed #frame,html.embed .controls{width:min(100%, calc((100vh - 64px) * 9 / 16))}
-  #stage{width:1080px;height:1920px}
-  .brand{left:48px;top:46px}
-  .onair{display:none}
-  #toc{left:48px;top:150px;width:auto;flex-direction:row;gap:16px}
-  #toc button{width:100px;height:76px;padding:0;justify-content:center;font-size:32px}
-  #toc button span{display:none}
-  #panel{left:48px;top:256px;width:984px;height:744px;padding:44px 52px 32px}
-  #panel .tag{font-size:32px}
-  #panel h2{font-size:78px;margin:22px 0 34px}
-  #panel li{font-size:50px}
-  #panel li .detail p{font-size:38px}
-  #panel ol li{font-size:38px}
-  #panel .big{font-size:96px;margin-bottom:20px}
-  #panel .date{margin-bottom:34px}
-  #panel a.pick img{aspect-ratio:2.4}
-  #card{left:48px;top:1024px;width:984px;height:300px}
-  #card img{width:504px;height:264px}
-  #card .site{font-size:22px}
-  #card .ttl{font-size:32px;-webkit-line-clamp:5}
-  #card .open{font-size:20px}
-  #cam{left:150px;top:1024px;width:780px;height:668px}
-  .has-card #cam{left:636px;top:1348px;width:396px;height:340px}
-  #wx{left:48px;top:1348px;width:564px;height:340px;padding:20px 26px 14px}
-  #wx .now{margin-top:10px}
-  #wx .now svg{width:80px;height:80px}
-  #wx .t{font-size:68px}
-  #cap{left:30px;right:30px;top:1704px;height:200px}
-  #cap span{font-size:52px;max-width:1020px}
-  #eplist{width:984px;max-height:1300px}
-  #cover .play{width:24%}
-  #flash{width:16%}
-  .links .item:has(.pic){grid-template-columns:minmax(0,1fr) 120px}
-  /* the bar under it fits the phone: no volume slider (the phone's buttons do that), the share button as an icon */
-  .controls{gap:8px}
-  .controls #seek{min-width:0}
-  .sound input{display:none}
-  .controls .time{font-size:12px}
-  #share{padding:0 9px}
-  #share span{display:none}
-}
+/* a phone held upright (html.phone, set from the script): the stage turns into a 1080x1920 one, like a short video
+   (html.v). The parts are the same, only their places and sizes change: the topic numbers in a row; for a news item
+   the link card's image first, then the panel, then the weather and her small camera; for the opening and the closing
+   the panel, and her big under it; the caption (room for two lines) at the bottom.
+   Scrolled down past it (html.dock), the player stays at the top of the screen as the usual 16:9 stage. */
+html.v #frame{aspect-ratio:9/16;width:min(100%, calc((100svh - 64px) * 9 / 16));margin:0 auto}
+html.embed.v #frame,html.embed.v .controls{width:min(100%, calc((100vh - 64px) * 9 / 16))}
+html.v #stage{width:1080px;height:1920px}
+html.v .brand{left:48px;top:46px}
+html.v .onair{right:48px;top:46px}
+html.v #toc{left:48px;top:150px;width:auto;flex-direction:row;gap:16px}
+html.v #toc button{width:100px;height:76px;padding:0;justify-content:center;font-size:32px}
+html.v #toc button span{display:none}
+html.v #panel{left:48px;top:256px;width:984px;height:744px;padding:44px 52px 32px}
+html.v #panel .tag{font-size:32px}
+html.v #panel h2{font-size:78px;margin:22px 0 34px}
+html.v #panel li{font-size:50px}
+html.v #panel li .detail p{font-size:38px}
+html.v #panel ol li{font-size:38px}
+html.v #panel .big{font-size:96px;margin-bottom:20px}
+html.v #panel .date{margin-bottom:34px}
+html.v #panel a.pick img{aspect-ratio:2.4}
+/* a news item: the picture first (the card, image on top), then what the story is */
+html.v #card{left:48px;top:256px;width:984px;height:560px;flex-direction:column;gap:12px}
+html.v #card img{width:948px;height:440px}
+html.v #card .txt{gap:4px}
+html.v #card .site{font-size:22px}
+html.v #card .ttl{font-size:30px;-webkit-line-clamp:1}
+html.v #card .open{display:none}
+html.v .has-card #panel{top:840px;height:484px;padding:34px 48px 24px}
+html.v .has-card #panel h2{font-size:62px;margin:16px 0 24px}
+html.v .has-card #panel li{font-size:44px}
+html.v .has-card #panel ul{gap:18px}
+html.v #cam{left:150px;top:1024px;width:780px;height:668px}
+html.v .has-card #cam{left:636px;top:1348px;width:396px;height:340px}
+html.v #wx{left:48px;top:1348px;width:564px;height:340px;padding:20px 26px 14px}
+html.v #wx .now{margin-top:10px}
+html.v #wx .now svg{width:80px;height:80px}
+html.v #wx .t{font-size:68px}
+html.v #cap{left:30px;right:30px;top:1704px;height:200px}
+html.v #cap span{font-size:52px;max-width:1020px}
+html.v #cover .play{width:24%}
+html.v #flash{width:16%}
+/* scrolled down past it: the player stays at the top as the usual 16:9 stage; #dockSpace keeps its place in the page */
+#dockSpace{display:none}
+html.swap #stage *{transition:none !important}
+html.dock #dockSpace{display:block}
+html.dock #frame{position:fixed;left:0;top:0;width:100%;z-index:40;border-radius:0;box-shadow:0 6px 24px rgba(0,0,0,.6)}
+/* under the player on a phone: the episode (one back, the date and its list, one forward) and the language, in reach */
+.mnav{display:none}
+html.phone .mnav{display:flex;align-items:center;gap:10px;margin:10px 0 2px}
+html.phone .mnav .epsel{gap:8px;flex:1;min-width:0}
+html.phone .mnav .epnav{width:44px;height:44px;flex:none}
+html.phone .mnav #sdate{flex:1;min-width:0;justify-content:space-between;height:44px;font-size:15px;padding:4px 5px 4px 16px;margin:0}
+html.phone .mnav #sdate span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.phone .mnav #sdate i{width:32px;height:32px;flex:none}
+html.phone .chan .langsw{margin:0 0 0 auto;flex:none}
+html.phone .chan .langsw button{font-size:14px;padding:9px 14px}
+html.phone .mnav #eplist{left:0;width:calc(100vw - 20px);max-height:60vh;top:calc(100% + 8px);padding:8px;border-radius:14px}
+html.phone .mnav #eplist .hd{font-size:11px;letter-spacing:2px;padding:6px 10px 4px}
+html.phone .mnav #eplist button{grid-template-columns:52px minmax(0,1fr) auto;gap:12px;padding:10px 12px;border-radius:10px}
+html.phone .mnav #eplist button[aria-selected=true]::before{top:10px;bottom:10px;width:3px}
+html.phone .mnav #eplist .dt{font-size:18px}
+html.phone .mnav #eplist .dt small{font-size:10px;letter-spacing:1px;margin-top:2px}
+html.phone .mnav #eplist .tt{font-size:14px}
+html.phone .mnav #eplist .ln{font-size:12px}
+html.phone .mnav #eplist .ln small{font-size:11px}
+/* the bar under it fits the phone: no volume slider (the phone's buttons do that), the share button as an icon */
+html.phone main{padding:10px}
+html.phone .controls{gap:8px}
+html.phone .controls #seek{min-width:0}
+html.phone .sound input{display:none}
+html.phone .controls .time{font-size:12px}
+html.phone #share{padding:0 9px}
+html.phone #share span{display:none}
 </style>
 </head>
 <body>
@@ -421,6 +449,7 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}footer a{color:var(--ye
     <div id="flash" aria-hidden="true"><svg viewBox="0 0 10 12"></svg></div>
     <div id="loading"></div>
   </div>
+  <div id="dockSpace"></div>
   <div class="controls">
     <button class="pp" id="pp" aria-label="再生"><svg viewBox="0 0 10 12" id="ppIcon"><path d="M0 0v12l10-6z"/></svg></button>
     <div class="sound"><button id="mute" aria-label="音声をオフ（M）" title="音声のオン／オフ（M）"><svg viewBox="0 0 24 24" id="muteIcon"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button>
@@ -431,6 +460,7 @@ footer{margin-top:24px;font-size:12px;color:var(--muted)}footer a{color:var(--ye
     <div class="sharewrap"><div id="shareMenu" role="menu" hidden><button data-act="native" role="menuitem"></button><button data-act="link" role="menuitem"></button><button data-act="embed" role="menuitem"></button></div>
     <button id="share" hidden aria-haspopup="menu"><svg viewBox="0 0 24 24"><path d="M18 16.1c-.8 0-1.5.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 9.8C7.5 9.3 6.8 9 6 9c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg><span></span></button></div>
   </div>
+  <div class="mnav" id="mnav"></div>
   <div class="chan"><span class="av"><i class="logo"></i><b id="avch"></b></span><div class="nm"><b id="cname"></b><small id="ctag"></small></div>
   </div>
   <div id="now"></div>
@@ -473,6 +503,38 @@ const audio = $("audio");
 let ep = null, speech = [], curPart = -1;
 
 // ---------- the stage follows the page width ----------
+// a phone held upright: the upright stage (html.v), the date and language under the player, and, scrolled down past
+// the player, the usual 16:9 stage docked at the top (html.dock)
+const PHONE = matchMedia("(orientation:portrait) and (max-width:820px)");
+let docked = false, uprightH = 0;
+function phoneLayout() {
+  const root = document.documentElement;
+  root.classList.toggle("phone", PHONE.matches);
+  if (!PHONE.matches && docked) { docked = false; root.classList.remove("dock"); }
+  root.classList.toggle("v", PHONE.matches && !docked);
+  // the episode picker and the language: under the player on a phone (the language at the end of the station's row),
+  // in the stage's header otherwise
+  if (PHONE.matches && !root.classList.contains("embed")) { $("mnav").append($("epsel")); document.querySelector(".chan").append($("langsw")); }
+  else if ($("epsel").parentNode !== document.querySelector(".brand")) document.querySelector(".brand").append($("epsel"), $("langsw"));
+}
+function dockCheck() {
+  if (!PHONE.matches || document.documentElement.classList.contains("embed")) return;
+  const root = document.documentElement;
+  const place = (docked ? $("dockSpace") : $("frame")).getBoundingClientRect();
+  if (!docked) uprightH = place.height;
+  // docked once what is left of it on screen is no taller than the docked player (a little give on the way back)
+  const want = place.top + uprightH < root.clientWidth * 9 / 16 + (docked ? 24 : 0);
+  if (want === docked) return;
+  docked = want;
+  $("dockSpace").style.height = uprightH + "px";
+  root.classList.add("swap");   // the other stage at once: no gliding from the old places
+  root.classList.toggle("dock", docked);
+  root.classList.toggle("v", !docked);
+  requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("swap")));
+}
+PHONE.addEventListener("change", () => { phoneLayout(); dockCheck(); });
+addEventListener("scroll", dockCheck, { passive: true });
+phoneLayout();
 new ResizeObserver(([e]) => { $("stage").style.transform = `scale(${e.contentRect.width / $("stage").offsetWidth})`; }).observe($("frame"));
 
 // ---------- her ----------
