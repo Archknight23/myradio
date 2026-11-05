@@ -65,7 +65,7 @@
  "depth": "depth.png",
  "parts": {"mouth_half": {"src": "mouth_half.png", "x": 430, "y": 318}, "...": {}},
  "mouth": {"1": "mouth_half", "2": "mouth_open"},
- "eye": {"blink": "blink", "half": "half_blink", "left": "look_left", "right": "look_right"},
+ "eye": {"blink": "blink", "half": "half_blink"},
  "expressions": {"smile": {"mouth": "smile_mouth"}}
 }
 ```
@@ -73,7 +73,7 @@
 - `base`：口を閉じて正面を見ている、背景が透明な絵
 - `parts`：`base` の `x`, `y` の位置に重ねる小さな画像。口の画像は口のまわりだけ、目の画像は目のまわりだけにしておくと、口と目を自由に組み合わせられる
 - `mouth`：口の開き具合（1 = 半開き、2 = 開き）に使う画像
-- `eye`：まばたき（`blink` 閉じた目、`half` 半目。`half` があると「半目→閉じ→半目」と滑らかになる）、左右を見るときに使う画像
+- `eye`：まばたき（`blink` 閉じた目、`half` 半目。`half` があると「半目→閉じ→半目」と滑らかになる）。`left`・`right` に左右を見る目の画像を書くと、リンクカードのほうを目で追う（なくてもよい。ないときは正面のまま）
 - `expressions`：表情ごとに、使う目と口の画像（`{"eye", "mouth"}`、片方だけでもよい）。いまはエンディングで `smile` を使う
 - `depth`（任意）：奥行きの白黒画像（手前ほど白い）。顔の向き、呼吸、後ろ髪の揺れに使う。キャラの中での「奥から何番目か」の割合（いちばん奥 0、いちばん手前 1、背景 0）で入れておくと、どの深度推定モデルで作っても同じように動く
 - `background`：キャラの後ろの色

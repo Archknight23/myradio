@@ -24,16 +24,6 @@
    "x": 448,
    "y": 245
   },
-  "look_left": {
-   "src": "look_left.png",
-   "x": 448,
-   "y": 245
-  },
-  "look_right": {
-   "src": "look_right.png",
-   "x": 448,
-   "y": 245
-  },
   "smile_mouth": {
    "src": "smile_mouth.png",
    "x": 430,
@@ -51,9 +41,7 @@
  },
  "eye": {
   "blink": "blink",
-  "half": "half_blink",
-  "left": "look_left",
-  "right": "look_right"
+  "half": "half_blink"
  },
  "expressions": {
   "smile": {
