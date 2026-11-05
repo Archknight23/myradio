@@ -4,7 +4,7 @@
 
 ## 新しい局を開くとき
 
-1. `station.json` を書き換える：`name`、`description`（どんな配信か）、`logo`（なければ null）、`language`、`schedule`、`credits`（声や素材の利用条件で必要なクレジットは必ず入れる）
+1. `station.json` を書き換える：`name`、`description`（どんな配信か）、`logo`（なければ null）、`language`、`schedule`、`credits`（声や素材の利用条件で必要なクレジットは必ず入れる）。`comments` はお手本の局のものなので、消すか、自分のリポジトリの値に書き換える（下の「コメント欄」）
 2. `logo.svg` を差し替える（お手本のロゴは残さない）。キャラ（`character/`）は、お手本のキャラをそのまま使ってもよい（公序良俗に反しない使い方なら自由。README の「ライセンス」）。別のキャラにするなら下の「キャラパック」
 3. `episodes/` のお手本の回を消し、`episodes.json` を `[]` にする
 4. 最初の回を作る（下の「台本」「声」）
@@ -46,3 +46,12 @@
 - 他人のサイトの画像を保存してリポジトリに入れない。リンクカードは、そのサイトが共有用に出している画像（OGP）の URL を JSON に書くだけ
 - 声や素材のクレジットを消さない
 - 秘密の情報（API キー、メールアドレス、家のネットワークの名前）を JSON やツールに書かない
+
+## コメント欄（任意）
+
+回ごとのコメント欄は giscus（GitHub Discussions）で出す。
+
+1. リポジトリの Settings → Features で Discussions をオンにし、`Comments` カテゴリを **Announcement** の形式で作る（新しいスレッドは管理者と giscus だけが立てられ、ほかの人はコメントだけできる）
+2. giscus のアプリ（https://github.com/apps/giscus）を、このリポジトリだけに入れる
+3. https://giscus.app でリポジトリとカテゴリの ID を調べ、`station.json` の `comments.giscus` に書く
+4. `giscus.json` の `origins` を自分の公開先（`https://<you>.github.io`）にする。ほかのサイトが、このリポジトリにコメントを書きこめないようにするため

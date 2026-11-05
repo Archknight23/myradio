@@ -52,11 +52,13 @@
 - **SNS での見え方**：`tools/share.py` が、回ごとのカード画像と小さなページ（`share/`）を作ります
 - **ほかのサイトに埋め込む**：プレーヤーの「共有」→「埋め込みコードをコピー」で出る `<iframe>` を貼ると、画面と再生バーだけが出ます
 - **天気**：`station.json` に `"weather": true` で、ニュース中にキャラの横へ今日の天気を出します（Open-Meteo）
+- **コメント欄**：回ごとのコメント欄を GitHub Discussions（giscus）で出せます。手順は `AGENTS.md` の「コメント欄」
 
 ## 中身
 
 ```
 station.json         局の自己紹介（名前・放送の内容・ロゴ・クレジット・音声の置き方）
+giscus.json          コメント欄（giscus）を使ってよいサイト
 index.html           プレーヤー
 episodes.json        回の一覧
 episodes/<日付>-<言語>.json  台本とタイミング（言語ごと：-ja、-en）

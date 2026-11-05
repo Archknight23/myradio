@@ -306,7 +306,7 @@ html.embed body{background:var(--ink)}
 html.embed main{max-width:none;padding:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
 html.embed #frame{width:min(100%, calc((100vh - 64px) * 16 / 9));margin:0 auto;border-radius:0}
 html.embed .controls{width:min(100%, calc((100vh - 64px) * 16 / 9));margin:6px auto 4px;padding:0 10px;box-sizing:border-box}
-html.embed :is(#now,#links,#scriptBox,#pastH,#eps,footer){display:none !important}
+html.embed :is(#now,#links,#scriptBox,#talkBox,#pastH,#eps,footer){display:none !important}
 html.embed #sname{cursor:pointer}
 html.embed #sname:hover{text-decoration:underline}
 #now{display:none;font-size:18px;font-weight:700;line-height:1.5;min-height:3em;margin:6px 2px}
@@ -345,6 +345,7 @@ h1{font-size:15px;margin:22px 0 8px;color:var(--muted);font-weight:600}
 details{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
 summary{cursor:pointer;color:var(--muted);font-size:14px}
 .source{white-space:pre-wrap;font-size:14px;line-height:1.7;color:#d6d8e0}
+.talkNote{margin:8px 0 4px;font-size:12px;color:var(--muted)}
 footer{margin-top:24px;font-size:12px;color:var(--muted)}footer a{color:var(--yellow)}
 @media (max-width:700px){ main{padding:10px} #now{display:block} }
 /* a phone held upright (html.phone, set from the script): the stage turns into a 1080x1920 one, like a short video
@@ -468,6 +469,7 @@ html.phone #share span{display:none}
   <div id="now"></div>
   <div class="links" id="links"></div>
   <details id="scriptBox"><summary id="scriptSum">台本を読む</summary><div class="source" id="scriptText"></div></details>
+  <details id="talkBox" hidden><summary id="talkSum">コメント</summary><p class="talkNote" id="talkNote"></p><div id="talk"></div></details>
   <h1 id="pastH">これまでの放送</h1>
   <div class="eps" id="eps"></div>
   <footer><span id="credits"></span> ／ <a href="https://github.com/monoradio102/myradio">myradio</a></footer>
@@ -483,11 +485,11 @@ const WEEK = "日月火水木金土";
 // seconds} with episodes/<date>.json) still works. The words of the page itself are below.
 const UI = {
   ja: { share: "共有", copied: "コピーしました", resumeAt: t => `${t} から続きを再生`, from0: "最初から", heard: "聞いた", partway: t => `途中 ${t}`, rate: "再生速度", wxHere: "現在地", wxCredit: "天気：Open-Meteo（CC BY 4.0）", wxNoGeo: "位置情報が使えませんでした", wxPrompt: "右上から場所を選ぶと、天気が出ます", wxChoose: "場所を選ぶ", wxUseHere: "現在地にする", wxJapan: "日本", wxWorld: "世界", wxHi: "最高", wxLo: "最低", wxRain: "降水", copyHint: "押すとコピー", native: "共有…", copyLink: "リンクをコピー", copyEmbed: "埋め込みコードをコピー", openPage: "ページを開く", news: "ニュース", none: "詳細なし", jump: "この話題へ", bye: "またあした！", related: "関連記事", open: "記事をひらく ↗",
-        notFound: c => `リンク先が見つかりませんでした（${c}）`, source: "出典", script: "台本を読む", past: "これまでの放送",
+        notFound: c => `リンク先が見つかりませんでした（${c}）`, source: "出典", script: "台本を読む", past: "これまでの放送", talk: "コメント", talkNote: "書きこむには GitHub のアカウントが要ります。コメントは GitHub Discussions に保存され、ここは giscus.app から読みこんでいます。",
         expired: "この回の音声は公開が終わりました（台本は下で読めます）", loading: "読み込み中…", empty: "まだ放送がありません",
         muted: "音声オフ・クリックでオン", sep: "・", colon: "：" },
   en: { share: "Share", copied: "Copied", resumeAt: t => `Resume from ${t}`, from0: "Start over", heard: "Heard", partway: t => `Stopped at ${t}`, rate: "Playback speed", wxHere: "Your area", wxCredit: "Weather: Open-Meteo (CC BY 4.0)", wxNoGeo: "Location not available", wxPrompt: "Choose a place (top right) to see its weather", wxChoose: "Choose", wxUseHere: "Use my location", wxJapan: "Japan", wxWorld: "World", wxHi: "H", wxLo: "L", wxRain: "Rain", copyHint: "Click to copy", native: "Share…", copyLink: "Copy link", copyEmbed: "Copy embed code", openPage: "Open the page", news: "News", none: "No details", jump: "Go to this story", bye: "See you tomorrow!", related: "Related", open: "Open article ↗",
-        notFound: c => `Link not found (${c})`, source: "Source", script: "Read the script", past: "Past episodes",
+        notFound: c => `Link not found (${c})`, source: "Source", script: "Read the script", past: "Past episodes", talk: "Comments", talkNote: "You need a GitHub account to comment. Comments are kept in GitHub Discussions, and this part loads from giscus.app.",
         expired: "This episode's audio is no longer available (the script is below)", loading: "Loading…", empty: "No episodes yet",
         muted: "Sound off · click to turn on", sep: " · ", colon: ": " },
 };
@@ -990,6 +992,7 @@ async function load(date, lang = LANG, at = 0) {
   $("eplist").querySelectorAll("[data-date]").forEach(b => b.setAttribute("aria-selected", b.dataset.date === date));
   const k = EPS.findIndex(e => e.date === date);   // EPS is newest first
   $("epPrev").disabled = k < 0 || k >= EPS.length - 1; $("epNext").disabled = k <= 0;
+  talkShow();
   $("scriptText").textContent = [...ep.opening, ...ep.news.flatMap(n => [`\n■ ${n.label}`, ...n.lines]), "", ...ep.closing].map(l => typeof l === "string" ? l : l.show).join("\n");
   // sources: the briefing's own URL (flagged when it does not open), and the related article the card shows instead
   const srcOf = n => n.source_link || (n.link && !n.link.found_by ? n.link : n.url ? { url: n.url } : null);
@@ -1057,6 +1060,25 @@ $("sname").addEventListener("click", e => {
   if (!document.documentElement.classList.contains("embed")) return;
   e.stopPropagation(); window.open(location.href.split(/[?#]/)[0] + location.hash, "_blank", "noopener");
 });
+// ---------- comments (station.json "comments": {"giscus": {repo, repoId, category, categoryId}}) ----------
+// one GitHub Discussions thread per day (both languages share it), made by giscus when the first comment comes. Nothing
+// loads from giscus.app until the listener opens the box; the station's giscus.json keeps other sites from using its repo
+let talkKey = "";
+function talkShow() {
+  const g = STATION.comments?.giscus, box = $("talkBox");
+  box.hidden = !g || !ep;
+  if (box.hidden || !box.open) return;
+  const term = `${STATION.name} ${ep.date}`, key = `${term}|${LANG}`;
+  if (key === talkKey) return;
+  talkKey = key;
+  const s = document.createElement("script");
+  Object.entries({ repo: g.repo, "repo-id": g.repoId, category: g.category, "category-id": g.categoryId, mapping: "specific",
+    term, strict: "1", "reactions-enabled": "1", "emit-metadata": "0", "input-position": "top", theme: "transparent_dark",
+    lang: LANG === "ja" ? "ja" : "en", loading: "lazy" }).forEach(([k, v]) => s.setAttribute(`data-${k}`, v));
+  s.src = "https://giscus.app/client.js"; s.crossOrigin = "anonymous"; s.async = true;
+  $("talk").replaceChildren(s);
+}
+$("talkBox").addEventListener("toggle", talkShow);
 // the station describes itself in station.json (name, what it broadcasts, logo, credits): this page and, later,
 // a channel guide read it
 let STATION = { name: "ものラジオ", credits: [] };
@@ -1067,7 +1089,7 @@ function setLang(l) {
   document.documentElement.lang = l;
   document.title = st("name"); $("sname").textContent = st("name");
   $("credits").textContent = [...(st("credits") || []), ...(STATION.weather ? [tr("wxCredit")] : [])].join(" ／ ");
-  $("scriptSum").textContent = tr("script"); $("pastH").textContent = tr("past"); $("cardOpen").textContent = tr("open");
+  $("scriptSum").textContent = tr("script"); $("talkSum").textContent = tr("talk"); $("talkNote").textContent = tr("talkNote"); $("pastH").textContent = tr("past"); $("cardOpen").textContent = tr("open");
   $("mutedTxt").textContent = tr("muted"); $("rate").title = $("rate").ariaLabel = tr("rate");
   $("share").querySelector("span").textContent = tr("share");
   $("cname").textContent = st("name"); $("ctag").textContent = st("tagline") || "";
