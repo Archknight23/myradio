@@ -1,11 +1,19 @@
-# myradio
+<h1 align="center">myradio</h1>
 
-**キャラクターが毎朝ニュースを読む「放送局」を、GitHub のリポジトリ 1 つで開けます。**
+<p align="center"><b>キャラクターが毎朝ニュースを読む「放送局」を、<br>GitHub のリポジトリ 1 つで開けます。</b></p>
 
-このリポジトリが、そのまま 1 つの局です。いまは、お手本の局「**ものラジオ**」（AI・3D の朝のニュース）が放送しています。
-→ **[ものラジオを見る](https://monoradio102.github.io/myradio/)**
+<p align="center">
+  <a href="https://monoradio102.github.io/myradio/"><img src="docs/screen.jpg" alt="ものラジオの放送画面" width="820"></a>
+</p>
 
-- **配信は、台本と音声を置いて push するだけ**です（`tools/publish.sh` が GitHub Pages に push します）。サーバーはいりません
+<p align="center">
+  <a href="https://monoradio102.github.io/myradio/"><img src="https://img.shields.io/badge/%E2%96%B6%20ON%20AIR-Mono%20Radio-ffd028?style=for-the-badge&labelColor=ff4468" alt="ものラジオを見る"></a>
+  <a href="#開局方法"><img src="https://img.shields.io/badge/open%20your-station-3fe0dc?style=for-the-badge&labelColor=161a26" alt="開局方法"></a>
+</p>
+
+<p align="center">このリポジトリが、そのまま 1 つの局です。<br>お手本の局「<b>ものラジオ</b>」（AI・3D の朝のニュース）が、毎朝放送中。</p>
+
+- **配信は、台本と音声を置いて push するだけ**。サーバーはいりません
 - 動画ではなく **HTML の番組**です。再生位置に合わせて、スライド・字幕・キャラ・リンクカードが動きます。見出しで飛べて、元の記事にすぐ行けて、台本はいつでも文字で読めます
 - **ニュースの画像は、記事のサイトがサムネイル用に公開している画像（OGP）です**。SNS でリンクを貼ったときに出るのと同じ画像を、そのサイトから直接表示して、記事へのリンクを添えます。画像を保存したり配り直したりしないので、著作権に配慮した作りです
 - **番組の中身は、文字の台本（JSON）です**。音声はそれを読み上げたもので、公開するのは直近 30 日分だけ。台本はずっと残るので、過去の回も記事として読めますし、別の声やキャラで作り直すこともできます
@@ -20,7 +28,7 @@
 | 局舎 | （GitHub のアカウント） | GitHub Pages で放送します |
 | 原稿 | 毎回の台本（`.json`） | ニュースのメールや RSS から、AI に書かせるのがおすすめ |
 | 声 | 台本を読み上げた音声（`.mp3`） | 音声合成で作る（COEIROINK、VOICEVOX、Kokoro、ElevenLabs など。利用規約は声ごとに確かめてください） |
-| キャスター | キャラの画像（`.png`） | **ものラジオのキャラをそのまま使っても構いません**（下の「ライセンス」） |
+| キャスター | 差分画像（`.png`） | [このキャラ](character/base.png)をそのまま使っても構いません |
 
 ### 手順
 
