@@ -21,7 +21,7 @@ for f in "$DIR"/*; do                            # audio files named <YYYY-MM-DD
 done
 # share cards (tools/share.py) when Pillow is there: SHARE_PYTHON picks the python, SHARE_FONT the font
 PY=${SHARE_PYTHON:-python3}
-if "$PY" -c "import PIL" 2>/dev/null; then "$PY" tools/share.py "$TMP" --all; else echo "share cards: skipped (no Pillow)"; fi
+if "$PY" -c "import PIL" 2>/dev/null; then "$PY" tools/share.py "$TMP" --all --front; else echo "share cards: skipped (no Pillow)"; fi
 touch "$TMP/.nojekyll"                           # serve files as they are
 cd "$TMP"
 git init -q -b gh-pages

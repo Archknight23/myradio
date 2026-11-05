@@ -14,6 +14,8 @@ usage: python3 tools/share.py [STATION_DIR] [--url BASE_URL] [--font FONT] [--al
   --font       a font with Japanese (default: env SHARE_FONT, else fonts/NotoSansJP.ttf in the station folder);
                Noto Sans JP (SIL OFL): https://github.com/google/fonts/tree/main/ofl/notosansjp
   --all        make every card again (default: only the missing ones)
+  --front      also put the tags into index.html, so a link to the station itself shows a card (the newest episode's).
+               tools/publish.sh does this in the copy it publishes; main's index.html stays as it is
 Needs Pillow; an SVG logo also needs resvg-py (without it the card has no logo).
 """
 import datetime, html, io, json, os, re, sys
@@ -160,6 +162,32 @@ def page(st, ep, lang, stem, target, base):
 """
 
 
+def front(root, station, base, newest):
+    """the station's own page (index.html): its name and description, with the newest episode's card"""
+    ix = os.path.join(root, "index.html")
+    if not newest or not os.path.exists(ix): return
+    e = lambda s: html.escape(s or "", quote=True)
+    lang = station.get("language", "ja")
+    locale = {"ja": "ja_JP", "en": "en_US"}.get(lang, lang)
+    tags = f"""<!-- share:front -->
+<meta name="description" content="{e(station.get('description'))}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{e(station.get('name'))}">
+<meta property="og:title" content="{e(station.get('name'))}{(' | ' + e(station['tagline'])) if station.get('tagline') else ''}">
+<meta property="og:description" content="{e(station.get('description'))}">
+<meta property="og:image" content="{e(base + f'share/{newest}.jpg')}">
+<meta property="og:image:width" content="{W}">
+<meta property="og:image:height" content="{H}">
+<meta property="og:url" content="{e(base)}">
+<meta property="og:locale" content="{locale}">
+<meta name="twitter:card" content="summary_large_image">
+<!-- /share:front -->
+"""
+    s = re.sub(r"<!-- share:front -->.*?<!-- /share:front -->\n?", "", open(ix).read(), flags=re.S)
+    open(ix, "w").write(s.replace("</head>", tags + "</head>", 1))
+    print(f"share: index.html shows {newest}")
+
+
 def main():
     args = [a for i, a in enumerate(sys.argv[1:], 1) if not a.startswith("--") and sys.argv[i - 1] not in ("--url", "--font")]
     root = os.path.abspath(args[0] if args else os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
@@ -174,8 +202,8 @@ def main():
         cj = json.load(open(os.path.join(root, pack)))
         if cj.get("base"): char = Image.open(os.path.join(root, os.path.dirname(pack), cj["base"])).convert("RGBA")
     os.makedirs(os.path.join(root, "share"), exist_ok=True)
-    made = 0
-    for entry in json.load(open(os.path.join(root, station.get("episodes", "episodes.json")))):
+    made, newest = 0, None
+    for entry in json.load(open(os.path.join(root, station.get("episodes", "episodes.json")))):   # newest first
         date = entry["date"]
         langs = [k for k in entry if k != "date" and isinstance(entry[k], dict)] or [None]
         for lang in langs:
@@ -189,7 +217,12 @@ def main():
             target = f"../#{date}/{lang}" if lang else f"../#{date}"
             open(os.path.join(root, "share", f"{stem}.html"), "w").write(page(st, ep, L, stem, target, base))
             made += 1
+        if newest is None:
+            pick = station.get("language") if station.get("language") in langs else langs[0]
+            stem = f"{date}-{pick}" if pick else date
+            if os.path.exists(os.path.join(root, "share", f"{stem}.jpg")): newest = stem
     print(f"share: {made} made")
+    if "--front" in sys.argv and base: front(root, station, base, newest)
 
 
 if __name__ == "__main__":
