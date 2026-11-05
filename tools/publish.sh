@@ -25,7 +25,7 @@ if "$PY" -c "import PIL" 2>/dev/null; then "$PY" tools/share.py "$TMP" --all; el
 touch "$TMP/.nojekyll"                           # serve files as they are
 cd "$TMP"
 git init -q -b gh-pages
-git add -A
+git add -A -f                                     # the audio too (the copied .gitignore keeps it off main only)
 git -c user.name="$NAME" -c user.email="$EMAIL" commit -q -m "publish $(date +%F)"
 git push -q -f "$REMOTE" gh-pages
 echo "published gh-pages: $(git ls-files | wc -l | tr -d ' ') files, $n audio (since $CUT)"
