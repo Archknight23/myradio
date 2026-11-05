@@ -10,6 +10,8 @@
 :root{--yellow:#ffd028;--red:#ff4468;--teal:#3fe0dc;--ink:#0c0e14;--cam:#161a26;--text:#f2f3f7;--muted:#8d93a8;--line:rgba(255,255,255,.13);
   --jp:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;--mono:"SF Mono",Menlo,Consolas,monospace}
 *{box-sizing:border-box}
+/* no blue tap flash on phones (the stage and its buttons show their own state) */
+html{-webkit-tap-highlight-color:transparent}
 body{margin:0;background:#07080c;color:var(--text);font-family:var(--jp)}
 main{max-width:1280px;margin:0 auto;padding:16px}
 /* the 1920x1080 stage, scaled to the page width (1080x1920 on a phone held upright: see the end) */
