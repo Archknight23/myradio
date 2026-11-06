@@ -1,0 +1,70 @@
+{
+  "edition": "2026-11-05",
+  "scope": "Public source citations for this dated demonstration; reports and commentary are separate. Prices and news are historical snapshots, not live offers or current alerts.",
+  "references": [
+    {
+      "url": "https://api.github.com/repos/gregkh/linux/commits/3599e6b3cc1ada96883d496a50a210d3afbb6987",
+      "label": "Vendor / maintainer source · CVE-2026-46300"
+    },
+    {
+      "url": "https://chaosfoundry.digital/logs/dd5bf3ea-27bc-4263-848e-48fb6e2f4435",
+      "label": "[5] Project Nephelhem - Chapter 0 · public Archive"
+    },
+    {
+      "url": "https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-4-2-released/",
+      "label": "Vendor / maintainer source · CVE-2026-97229"
+    },
+    {
+      "url": "https://github.com/google/brotli/releases/tag/v1.2.1",
+      "label": "Vendor / maintainer source · CVE-2026-111497"
+    },
+    {
+      "url": "https://hub.ivanti.com/s/article/Security-Advisory-Ivanti-Connect-Secure-CVE-2026-104935?language=en_US",
+      "label": "Vendor / maintainer source · CVE-2026-111357"
+    },
+    {
+      "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-tunnel-dos-s6mgkb75",
+      "label": "Vendor / maintainer source · CVE-2026-76418"
+    },
+    {
+      "url": "https://support.apple.com/en-us/120896",
+      "label": "Vendor / maintainer source · CVE-2024-27834"
+    },
+    {
+      "url": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/0/38017",
+      "label": "Vendor / maintainer source · CVE-2026-41709"
+    },
+    {
+      "url": "https://wordpress.org/news/2026/10/wordpress-7-1-4",
+      "label": "Vendor / maintainer source · CVE-2026-119977"
+    },
+    {
+      "url": "https://www.adobe.com/trust/security/products/commerce/apsb26-73.html",
+      "label": "Vendor / maintainer source · CVE-2026-48356"
+    },
+    {
+      "url": "https://www.bbc.co.uk/news/articles/cm78p0n09q3xo",
+      "label": "BBC News · 2026-11-05"
+    },
+    {
+      "url": "https://www.bbc.co.uk/news/articles/cmy0eeg101djo",
+      "label": "BBC News · 2026-11-06"
+    },
+    {
+      "url": "https://www.bbc.co.uk/weather/articles/cwyvrz09mnd6o",
+      "label": "BBC Weather · 2026-11-06"
+    },
+    {
+      "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+      "label": "CISA KEV catalog · added 2026-10-27"
+    },
+    {
+      "url": "https://www.microcenter.com/product/696246/powercolor-amd-radeon-rx-9060-xt-reaper-dual-fan-16gb-gddr6-pcie-50-graphics-card",
+      "label": "[4] Micro Center (US) · RX9060XT16GA"
+    },
+    {
+      "url": "https://www.newegg.com/asrock-challenger-rx9070xt-cl-16g-radeon-rx-9070-xt-16gb-graphics-card-triple-fans/p/N82E16814930145",
+      "label": "[3] Newegg (US) · RX9070XT CL 16G"
+    }
+  ]
+}

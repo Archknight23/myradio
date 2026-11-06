@@ -1,3 +1,7 @@
 audio/
 .DS_Store
 __pycache__/
+broadcast/output/
+broadcast/.staging-*/
+.env
+.env.*
